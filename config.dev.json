@@ -1,0 +1,19 @@
+{
+    "apk_path": null,
+    "apk_name": "",
+    "zip_enable": true,
+    "zip_with_del": true,
+    "key_file": null,
+    "key_pw": "",
+    "key_alias": "",
+    "key_alias_pw": "",
+    "channel_file": "",
+    "username": "",
+    "auth": [
+        ["test", "test"],
+        ["test1", "test1"]
+    ],
+    "zip_checkbox_value": [
+        "压缩输出", "压缩后删除源文件"
+    ]
+}

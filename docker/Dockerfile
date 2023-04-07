@@ -6,9 +6,8 @@ WORKDIR /app
 
 # 复制当前目录中的所有文件到 /app
 COPY . .
-COPY config.dev.json /app/config.json
 
-# 安装所需的 Python 包（这里的all_proxy需要替换为你的代理或者删掉）
+# 安装所需的 Python 包
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 声明容器监听的端口

@@ -4,6 +4,7 @@
 # data：2023-04-05 20:11
 # describe：
 import json
+import os
 from copy import deepcopy
 
 from models.m_apk import ApkOption
@@ -19,6 +20,15 @@ null = None
 
 # 全局公共配置
 g_config = ApkOption.parse_obj(u_json.eval_dict(u_file.read('config.json') or {}))
+# 尝试从环境变量中读取auth配置，配置格式为：user1:pw1|user2:pw2
+env_auth_config = os.environ.get("APK_COPILOT_AUTH") or ''
+if env_auth_config:
+    g_config.auth = g_config.auth or []
+    for auth_str in env_auth_config.split('|'):
+        auth_user = auth_str.split(':') or []
+        if len(auth_user) < 2:
+            continue
+        g_config.auth.append(auth_user)
 
 # 全局用户配置
 user_config = ApkOption()

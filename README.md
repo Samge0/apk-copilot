@@ -32,7 +32,10 @@ cp -R 本地路径xxx/build-tools/31.0.0 res/build-tools/31.0.0
 uvicorn app:app --reload --host 0.0.0.0 --port 7860
 ```
 
+### 技术交流
+[Join Discord >>](https://discord.com/invite/eRuSqve8CE)
+
 ### 相关截图
 ![一键打多渠道包&签名](res/screenshot/一键打多渠道包&签名.png)
-![密钥配置](res/screenshot/密钥配置.png)
+![密钥配置](res/screenshot/密钥配置.jpg)
 ![渠道配置](res/screenshot/渠道配置.png)

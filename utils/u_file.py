@@ -13,7 +13,7 @@ import os
 def save_base64(_base64: str, _path: str) -> bool:
     """保存base64到文件"""
     try:
-        if os.path.exists(_path):
+        if exists(_path):
             return True
         filedata = base64.b64decode(_base64.replace('\n', ''))
         with open(_path, "wb") as fh:
@@ -39,7 +39,9 @@ def save(_txt: str, _path: str, _type: str = 'w+') -> bool:
 
 def read(_path: str) -> str:
     """读取文件"""
-    if os.path.exists(_path) is False:
+    if not _path:
+        return ''
+    if exists(_path) is False:
         return ''
     with open(_path, "r", encoding='utf-8') as f:
         txt = f.read()
@@ -49,7 +51,7 @@ def read(_path: str) -> str:
 
 def size(file_path) -> float:
     """读取文件大小，单位：M"""
-    if not file_path or os.path.exists(file_path) is False:
+    if not file_path or exists(file_path) is False:
         return 0
     return os.path.getsize(file_path) / 1024 / 1024
 
@@ -62,3 +64,13 @@ def remove(file_path: str):
         os.remove(file_path)
     except:
         pass
+
+
+def exists(filepath: str) -> bool:
+    """
+    判断文件路径是否存在
+    :param filepath:
+    :return:
+    """
+    return filepath and os.path.exists(filepath)
+

@@ -7,22 +7,39 @@ import os
 
 import gradio as gr
 
-from models.m_apk import ApkOption
-from utils import u_file
-from utils.u_config import g_config
+from utils import u_channel, u_config, u_file
 
 true = True
 false = False
 null = None
 
 
-def init_title_with_user_info(request: gr.Request):
+def init(request: gr.Request):
     """ 初始化标题与用户信息 """
-    if hasattr(request, "username") and request.username:  # is not None or is not ""
-        g_config.username = request.username
+    username = get_username(request)
+    u_config.init_config(username)
+    return gr.Markdown.update(value=f"## Apk Copilot 多渠道打包&签名（当前登录账号：{u_config.user_config.username}）")
+
+
+def get_username(request):
+    """
+    从gradio中获取用户名
+    :param request:
+    :return:
+    """
+    if hasattr(request, "username") and request.username:
+        username = request.username
     else:
-        g_config.username = "default_user"
-    return gr.Markdown.update(value=f"## Apk Copilot 多渠道打包&签名（当前登录账号：{g_config.username}）")
+        username = ""
+    return username
+
+
+def check_channel(filepath: str) -> str:
+    """ 检查渠道信息是否配置正确 """
+    channel_dict = u_channel.get_channel_dict(filepath)
+    if len(channel_dict.keys()) == 0:
+        return f'渠道配置解析为空列表，请上传 "渠道号#渠道名" 这样格式的渠道配置文件，多个渠道需要换行。'
+    return None
 
 
 def check_file(file_obj, suffix_lst: list) -> str:
@@ -41,20 +58,7 @@ def check_file(file_obj, suffix_lst: list) -> str:
     if filename_suffix not in suffix_lst:
         return f"【温馨提示】请上传后缀为 {suffix_str} 的文件"
 
-    if not os.path.exists(filename):
+    if not u_file.exists(filename):
         return "【温馨提示】文件上传中，请等待文件上传完毕后再进行操作"
 
     return None
-
-
-def handler_reload_config():
-    """
-    重新加载配置，当前方法还需调整 TODO
-    :return:
-    """
-
-    # 全局的gr配置
-    _gr_config = gr.State(eval(u_file.read('config.json') or {}))
-    # 全局配置
-    _g_config = ApkOption.parse_obj(_gr_config.value)
-    return _g_config.zip_checkbox_value, _g_config

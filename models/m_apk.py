@@ -23,11 +23,11 @@ class ApkOption(BaseModel):
     # 待处理apk的实际名字
     apk_name: Optional[str] = None
     # 是否压缩
-    zip_enable: Optional[bool] = False
+    zip_enable: Optional[bool] = True
     # 是否在压缩后删除源文件
     zip_with_del: Optional[bool] = True
     # 压缩选项选中的值
-    zip_checkbox_value: Optional[list] = None
+    zip_checkbox_value: Optional[list] = ["压缩输出", "压缩后删除源文件"]
 
     # keystore的文件路径
     key_file: Optional[str] = None
@@ -35,8 +35,8 @@ class ApkOption(BaseModel):
     key_pw: Optional[str] = None
     # keystore别名
     key_alias: Optional[str] = None
-    # keystore别名密码
-    key_alias_pw: Optional[str] = None
+    # keystore密钥库密码
+    key_store_pw: Optional[str] = None
 
     # 渠道配置的文件路径
     channel_file: Optional[str] = None

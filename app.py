@@ -33,9 +33,10 @@ with gr.Blocks() as app:
 
 
 app.launch(
-    share=False,
+    share=True,
     inbrowser=False,
     debug=True,
     auth=u_config.g_config.auth,
     server_name="0.0.0.0",
+    server_port=7860
 )

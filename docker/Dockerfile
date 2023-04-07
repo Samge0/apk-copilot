@@ -1,5 +1,5 @@
 # 设置基础镜像
-FROM python:3.10-slim-buster
+FROM samge/apk-copilot:base
 
 # 将工作目录设置为 /app
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # 安装所需的 Python 包
-RUN pip install --no-cache-dir -r requirements.txt
+RUN java -version && pip install --no-cache-dir -r requirements.txt
 
 # 声明容器监听的端口
 EXPOSE 7860

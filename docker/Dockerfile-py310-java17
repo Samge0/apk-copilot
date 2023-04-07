@@ -1,0 +1,15 @@
+# 设置基础镜像：python3.10+java13
+FROM python:3.10
+
+WORKDIR /usr/lib/jvm
+
+ENV PATH="/usr/lib/jvm/jdk-17.0.2/bin:${PATH}"
+
+# java版本下载地址：https://jdk.java.net/archive/
+RUN echo "############## 【设置临时代理：该步骤可替换自己代理或置空】 ##############" && \
+    export https_proxy=http://192.168.3.169:7890 http_proxy=http://192.168.3.169:7890 && \
+    echo "############## 【配置java环境：openjdk-17.0.2】 ##############" && \
+    apt-get update && apt-get install -y wget && \
+    wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz && \
+    tar -xzf openjdk-17.0.2_linux-x64_bin.tar.gz && \
+    java -version

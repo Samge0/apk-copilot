@@ -6,8 +6,7 @@ name: build docker image
 on:
   push:
     branches:
-#      - main
-      - release
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   # 可以手动触发

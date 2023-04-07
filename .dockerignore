@@ -143,6 +143,9 @@ sg_test
 .github
 flagged
 
+config.json
+config_*.json
+
 res/apks
 !res/apks/README.md
 

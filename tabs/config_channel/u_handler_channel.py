@@ -46,14 +46,7 @@ def handler(_file):
         return check_result
 
     # 将配置保存在指定用户目录下
-    today_str = u_date.get_today_str(f='%Y-%m-%d')
-    filename = u_channel.get_filename(_file.orig_name or _file.name)
-    suffix = str(_file.orig_name or _file.name).split('.')[-1]
-    save_dir = f'res/channels/{today_str}'
-    if not u_file.exists(save_dir):
-        os.makedirs(save_dir)
-    save_path = f'{save_dir}/{u_config.user_config.username}_{filename}.{suffix}'
-    shutil.copy(_file.name, save_path)
+    save_path = u_handler_common.copy_file_with_date(_file, 'res/channels')
 
     # 更新配置
     u_config.user_config.channel_file = os.path.abspath(save_path)  # 这里保存绝对路径，防止gradio后续读取错误

@@ -1,0 +1,24 @@
+# 设置基础镜像：build-tools + requirements.txt
+FROM samge/env:py310-java17
+
+WORKDIR /tmp
+
+COPY requirements.txt requirements.txt
+
+# 指定build-tools环境变量
+ENV PATH="/app/res/build-tools/33.0.0:${PATH}"
+
+# buile-tools下载地址：https://androidsdkmanager.azurewebsites.net/Buildtools
+RUN echo "############## 【设置临时代理：该步骤可替换自己代理或置空】 ##############" && \
+    export https_proxy=http://192.168.3.169:7890 http_proxy=http://192.168.3.169:7890 && \
+    echo "############## 【下载：build-tools_r33】 ##############" && \
+    wget https://dl.google.com/android/repository/build-tools_r33-linux.zip && \
+    unzip -q build-tools_r33-linux.zip -d /tmp && \
+    mkdir -p /app/res/build-tools/33.0.0 && \
+    mv /tmp/android-13/* /app/res/build-tools/33.0.0/ && \
+    ls -al /app/res/build-tools/33.0.0 && \
+    echo "############## 【安装：requirements.txt】 ##############" && \
+    python -m pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    echo "############## 【清理：/tmp】 ##############" && \
+    rm -rf /tmp/*

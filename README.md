@@ -1,13 +1,12 @@
 ## ApkCopilot 多渠道打包&签名 
 一个简易的ApkCopilot 多渠道打包&签名 + gradio操作界面。
 
-### 版本信息
-- java：`java version "17.0.4.1" 2022-08-18 LTS`
-- python：`Python 3.10.10`
-- build-tools：`31.0.0`
+### 版本信息（这里只是列出开发已知可行版本，其他版本需要使用这自己探索）
+- java：`java version "17.0.2`，[下载地址>>](https://jdk.java.net/archive/)
+- python：`Python 3.10`，[下载地址>>](https://www.python.org/downloads/)
+- build-tools：`33.0.0`，[下载地址>>](https://androidsdkmanager.azurewebsites.net/Buildtools)
 
 ### docker方式运行
-备注：目前暂且在本地运行，需要自行配置java、python、安卓的build-tools环境，后续有时间再改为docker运行模式；
 [点击这里查看docker说明](docker/README.md)
 
 

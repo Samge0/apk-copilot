@@ -5,6 +5,7 @@
 # describe：
 import json
 import os
+import threading
 from copy import deepcopy
 
 from models.m_apk import ApkOption
@@ -17,6 +18,11 @@ from utils import u_file, u_json
 true = True
 false = False
 null = None
+
+
+# 创建一个线程锁
+lock = threading.Lock()
+
 
 # 全局公共配置
 g_config = ApkOption.parse_obj(u_json.eval_dict(u_file.read('config.json') or {}))
@@ -40,16 +46,16 @@ def get_config_path(username: str) -> str:
 
 def save_config(_config: ApkOption):
     """ 保存用户配置 """
-    save_data = deepcopy(_config)
-    # apk信息每次都需要上传，不需要保存到配置
-    save_data.apk_path = None
-    save_data.apk_name = None
-    u_file.save(json.dumps(save_data.dict(), indent=4, ensure_ascii=False), get_config_path(user_config.username))
+    save_txt = json.dumps(_config.dict(), indent=4, ensure_ascii=False)
+    save_path = get_config_path(user_config.username)
+    u_file.save(save_txt, save_path)
 
 
 def init_config(username: str):
     """ 初始化用户配置 """
+    lock.acquire()  # 获取线程锁
     if username and username == user_config.username:
+        lock.release()  # 释放线程锁
         return
     user_config_path = get_config_path(username)
     user_config_json = u_file.read(user_config_path)
@@ -57,13 +63,13 @@ def init_config(username: str):
     user_config_option = ApkOption.parse_obj(config_dict)
     user_config_option.username = username
     update_config(user_config_option)
+    lock.release()  # 释放线程锁
 
 
 def update_config(_option: ApkOption):
     """ 更新用户配置 """
     global user_config
     user_config = deepcopy(_option)
-    # 不需要保存apk路径信息，因为apk都是临时上传的
     save_config(user_config)
 
 

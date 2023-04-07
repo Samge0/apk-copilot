@@ -1,6 +1,16 @@
 ## ApkCopilot的api-docker镜像
 一个ApkCopilot的api-docker镜像
 
+### 构建api基础包：python3.10+java13
+```shell
+docker build . -t samge/env:py310-java17 -f docker/Dockerfile-py310-java17
+```
+
+### 构建api基础包：build-tools + requirements.txt
+```shell
+docker build . -t samge/apk-copilot:base -f docker/Dockerfile-base
+```
+
 ### 构建api正式包
 ```shell
 docker build . -t samge/apk-copilot -f docker/Dockerfile
@@ -8,6 +18,8 @@ docker build . -t samge/apk-copilot -f docker/Dockerfile
 
 ### 上传
 ```shell
+docker push samge/env:py310-java17 && \
+docker push samge/apk-copilot:base && \
 docker push samge/apk-copilot
 ```
 

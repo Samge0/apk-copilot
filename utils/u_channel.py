@@ -13,7 +13,8 @@ apk多渠道打包&签名相关工具类
 res_path = f"../.."
 
 # sdk 编译环境的位置
-build_tool_path = f"res/build-tools/31.0.0"  
+# build_tool_path = f"res/build-tools/31.0.0"
+build_tool_path = f"res/build-tools/33.0.0"
 
 # walle的jar文件路径
 walle_jar_file = f"{res_path}/jars/walle-cli-all.jar"
@@ -33,13 +34,6 @@ def parse_channel_with_sign() -> (str, list):
     # 当前登录用户名
     username = option.username
 
-    # 今天的日期字符串
-    today_str = u_date.get_today_str(f='%Y-%m-%d')
-    # 时间戳
-    timestamp = u_date.get_timestamp()
-    # 输出的渠道文件目录
-    outputs_dir = f"{res_path}/outputs/{today_str}/{username}_{timestamp}"
-    
     # 签名别名
     key_alias = option.key_alias
     # 签名别名-密码
@@ -49,15 +43,23 @@ def parse_channel_with_sign() -> (str, list):
     # 签名文件路径
     key_file = option.key_file
 
-    # 签名之后的名称
-    apk_filename = get_filename(option.apk_name) if option.apk_name else get_filename(option.apk_path)
-    sign_apk_path = f"{res_path}/apks/{apk_filename}_sign.apk"
-
     # 渠道配置的文件路径
     channel_file = option.channel_file
 
     # 移动到buildtool目录
     os.chdir(f"{get_project_root_path()}/{build_tool_path}")
+
+    # 今天的日期字符串
+    today_str = u_date.get_today_str(f='%Y-%m-%d')
+    # 输出的渠道文件目录
+    outputs_dir = f"{res_path}/outputs/{today_str}/{username}"
+    u_file.makedirs(outputs_dir, need_clean=True)
+
+    # 签名之后的名称
+    apk_filename = get_filename(option.apk_name) if option.apk_name else get_filename(option.apk_path)
+    sign_save_dir = f"{res_path}/apks/{today_str}/{username}"
+    u_file.makedirs(sign_save_dir, need_clean=True)
+    sign_apk_path = f"{sign_save_dir}/{apk_filename}_sign.apk"
 
     # zipalign操作
     status, error_msg = parse_zipalign(option.apk_path, sign_apk_path)
@@ -194,6 +196,9 @@ def parse_signature_check(sign_apk_path) -> (bool, str):
 def read_key_info(key_file, key_alias, key_store_pw, key_pw) -> (bool, str):
     """
     读取秘钥信息
+        例如：
+            keytool -list -v -keystore 密钥文件路径 -alias 密钥别名 -storepass 密钥库密码 -keypass 密钥密码
+
     :param key_file: 应用程序签名的密钥库 (keystore) 文件路径
     :param key_alias: 用于签署 APK 文件的密钥库中的密钥别名
     :param key_store_pw: 密钥库密码
@@ -215,7 +220,7 @@ def read_key_info(key_file, key_alias, key_store_pw, key_pw) -> (bool, str):
             cmd += ["-storepass", key_store_pw]
         if key_pw:
             cmd += ["-keypass", key_pw]
-        print(' '.join(cmd))
+        # print(' '.join(cmd))
         result = subprocess.run(cmd, capture_output=True, timeout=10)
         byte_str = result.stdout
         byte_encoding = check_encoding(byte_str)

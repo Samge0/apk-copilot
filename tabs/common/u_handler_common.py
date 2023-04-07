@@ -4,10 +4,11 @@
 # data：2023-04-05 17:23
 # describe：
 import os
+import shutil
 
 import gradio as gr
 
-from utils import u_channel, u_config, u_file
+from utils import u_channel, u_config, u_file, u_date
 
 true = True
 false = False
@@ -62,3 +63,26 @@ def check_file(file_obj, suffix_lst: list) -> str:
         return "【温馨提示】文件上传中，请等待文件上传完毕后再进行操作"
 
     return None
+
+
+def copy_file_with_date(_file, save_dir: str) -> str:
+    """
+    复制临时文件到指定目录，并返回复制后的文件相对地址
+
+    :param _file: gradio中的临时文件对象
+    :param save_dir: 文件保存目录
+    :return: 复制后的文件相对地址
+    """
+    # 获取当天日期
+    today_str = u_date.get_today_str(f='%Y-%m-%d')
+    # 从file中读取文件名
+    filename = str(_file.orig_name or _file.name).replace(os.path.sep, '/').split('/')[-1]
+    # 将日期信息拼接到保存的目录
+    save_dir = f'{save_dir}/{today_str}/{u_config.user_config.username}'
+    # 判断并创建多级目录
+    u_file.makedirs(save_dir)
+    # 拼接需要保存的目标文件路径
+    save_path = f'{save_dir}/{filename}'
+    # 开始复制
+    shutil.copy(_file.name, save_path)
+    return save_path

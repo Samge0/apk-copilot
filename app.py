@@ -23,7 +23,7 @@ with gr.Blocks() as app:
     app_title = gr.Markdown(value="", elem_id="app_title")
     with gr.Tab("首页"):
         u_layout_home.create_layout(app)
-    with gr.Tab("签名配置"):
+    with gr.Tab("密钥配置"):
         u_layout_keystore.create_layout(app)
     with gr.Tab("渠道配置"):
         u_layout_channel.create_layout(app)

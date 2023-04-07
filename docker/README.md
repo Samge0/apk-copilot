@@ -23,6 +23,11 @@ docker push samge/apk-copilot:base && \
 docker push samge/apk-copilot
 ```
 
+### 创建本地配置映射目录，用于配置持久化
+```shell
+mkdir -p ~/user_configs
+```
+
 ### 运行docker镜像
 - 方式1：使用环境变量配置登录用户信息
 ```shell
@@ -30,6 +35,7 @@ docker run -d \
 --name apk-copilot \
 -p 7860:7860 \
 -e APK_COPILOT_AUTH="user1:pw1|user2:pw2" \
+-v ~/user_configs:/app/user_configs \
 --pull=always \
 --restart always \
 --memory=1.0G \
@@ -45,6 +51,7 @@ docker run -d \
 --name apk-copilot \
 -p 7860:7860 \
 -v ~/config.json:/app/config.json \
+-v ~/user_configs:/app/user_configs \
 --pull=always \
 --restart always \
 --memory=1.0G \

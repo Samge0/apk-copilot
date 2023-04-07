@@ -13,5 +13,8 @@ RUN java -version && pip install --no-cache-dir -r requirements.txt
 # 声明容器监听的端口
 EXPOSE 7860
 
+# 目录映射
+VOLUME /app/user_configs
+
 # 运行应用程序
 CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port 7860"]

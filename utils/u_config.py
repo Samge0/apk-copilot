@@ -41,11 +41,10 @@ user_config = ApkOption()
 
 
 def get_config_path(username: str) -> str:
-    save_dir = 'user_configs'
-    u_file.makedirs(save_dir)
     username = username or 'default'
-    filename = f"config_{username}.json"
-    return f"{save_dir}/{filename}"
+    save_dir = f'res/user_configs/{username}'
+    u_file.makedirs(save_dir)
+    return f"{save_dir}/user_config.json"
 
 
 def save_config(_config: ApkOption):

@@ -35,7 +35,7 @@ docker run -d \
 --name apk-copilot \
 -p 7860:7860 \
 -e APK_COPILOT_AUTH="user1:pw1|user2:pw2" \
--v ~/user_configs:/app/user_configs \
+-v ~/user_configs:/app/res/user_configs \
 --pull=always \
 --restart always \
 --memory=1.0G \
@@ -51,7 +51,7 @@ docker run -d \
 --name apk-copilot \
 -p 7860:7860 \
 -v ~/config.json:/app/config.json \
--v ~/user_configs:/app/user_configs \
+-v ~/user_configs:/app/res/user_configs \
 --pull=always \
 --restart always \
 --memory=1.0G \

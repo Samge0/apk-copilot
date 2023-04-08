@@ -73,14 +73,10 @@ def copy_file_with_date(_file, save_dir: str) -> str:
     :param save_dir: 文件保存目录
     :return: 复制后的文件相对地址
     """
-    # 获取当天日期
-    today_str = u_date.get_today_str(f='%Y-%m-%d')
     # 从file中读取文件名
     filename = str(_file.orig_name or _file.name).replace(os.path.sep, '/').split('/')[-1]
-    # 将日期信息拼接到保存的目录
-    save_dir = f'{save_dir}/{today_str}/{u_config.user_config.username}'
     # 判断并创建多级目录
-    u_file.makedirs(save_dir)
+    u_file.makedirs(save_dir, need_clean=True)
     # 拼接需要保存的目标文件路径
     save_path = f'{save_dir}/{filename}'
     # 开始复制

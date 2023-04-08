@@ -49,15 +49,13 @@ def parse_channel_with_sign() -> (str, list):
     # 移动到buildtool目录
     os.chdir(f"{get_project_root_path()}/{build_tool_path}")
 
-    # 今天的日期字符串
-    today_str = u_date.get_today_str(f='%Y-%m-%d')
     # 输出的渠道文件目录
-    outputs_dir = f"{res_path}/outputs/{today_str}/{username}"
+    outputs_dir = f"{res_path}/user_configs/{username}/outputs"
     u_file.makedirs(outputs_dir, need_clean=True)
 
     # 签名之后的名称
     apk_filename = get_filename(option.apk_name) if option.apk_name else get_filename(option.apk_path)
-    sign_save_dir = f"{res_path}/apks/{today_str}/{username}"
+    sign_save_dir = f"{res_path}/user_configs/{username}/apks"
     u_file.makedirs(sign_save_dir, need_clean=True)
     sign_apk_path = f"{sign_save_dir}/{apk_filename}_sign.apk"
 

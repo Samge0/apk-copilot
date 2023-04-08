@@ -46,7 +46,7 @@ def handler(_file):
         return check_result
 
     # 将配置保存在指定用户目录下
-    save_path = u_handler_common.copy_file_with_date(_file, 'res/channels')
+    save_path = u_handler_common.copy_file_with_date(_file, f'res/user_configs/{u_config.user_config.username}/channel')
 
     # 更新配置
     u_config.user_config.channel_file = os.path.abspath(save_path)  # 这里保存绝对路径，防止gradio后续读取错误

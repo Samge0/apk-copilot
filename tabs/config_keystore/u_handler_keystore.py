@@ -62,7 +62,7 @@ def handler(_file, key_pw, key_alias, key_store_pw):
         return key_info
 
     # 将配置保存在指定用户目录下
-    save_path = u_handler_common.copy_file_with_date(_file, 'res/keystores')
+    save_path = u_handler_common.copy_file_with_date(_file, f'res/user_configs/{u_config.user_config.username}/keystore')
 
     # 更新配置
     u_config.user_config.key_file = os.path.abspath(save_path)  # 这里保存绝对路径，防止gradio后续读取错误

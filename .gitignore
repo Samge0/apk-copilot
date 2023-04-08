@@ -142,20 +142,12 @@ spider_logs
 *.private.env.json
 sg_test
 flagged
+
 config.json
 config_*.json
-
-res/apks
-!res/apks/README.md
 
 res/build-tools/*
 !res/build-tools/README.md
 
-res/channels
-!res/channels/README.md
-
-res/keystores
-!res/keystores/README.md
-
-res/outputs/*
-!res/outputs/README.md
+res/user_configs/*
+!res/user_configs/*/README.md

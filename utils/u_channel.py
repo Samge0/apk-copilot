@@ -1,4 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding : utf-8 -*-
+# author：samge
+# data：2023-04-05 20:11
+# describe：
 import os
+import shutil
 import subprocess
 import zipfile
 
@@ -125,7 +131,7 @@ def rename_apk(apk_filename, channel_file, option, outputs_dir) -> list:
 
             # 执行修改操作
             if u_file.exists(new_path):
-                os.remove(new_path)
+                u_file.remove(new_path)
             os.rename(old_path, new_path)
 
             # 如果不是压缩模式 && 是本次操作的同名文件，则添加到输出文件列表
@@ -352,7 +358,7 @@ def zip_apk_dir(directory_path, sign_apk_path, option):
 
     print('正在将结果文件夹输出为zip压缩包……')
     if u_file.exists(zip_file_path):
-        os.remove(zip_file_path)
+        u_file.remove(zip_file_path)
     tmp_zip_file = f'result-{u_date.get_timestamp()}.zip'
     _zipfile = zipfile.ZipFile(tmp_zip_file, 'w', zipfile.ZIP_DEFLATED)
     for root, dirs, files in os.walk(directory_path):
@@ -374,9 +380,9 @@ def zip_apk_dir(directory_path, sign_apk_path, option):
 
             # 判断是否在压缩后自动删除源文件
             if option.zip_with_del:
-                os.remove(apk_file_path)
+                u_file.remove(apk_file_path)
     _zipfile.close()
-    os.rename(tmp_zip_file, zip_file_path)
+    zip_file_path = shutil.move(tmp_zip_file, zip_file_path)
     print(f"压缩完成，文件存放在：{zip_file_path}")
     return zip_file_path
 

@@ -1,5 +1,7 @@
 ## ApkCopilot 多渠道打包&签名 
-一个简易的ApkCopilot 多渠道打包&签名 + gradio操作界面。
+一个简易的ApkCopilot 多渠道打包&签名 + gradio操作界面。<br>
+360加固的`多渠道打包+签名`功能收费了，这是`多渠道打包+签名`的替代方案，只需要`上传加固后的apk`即可自动签名&打多渠道包。<br>
+本项目使用`walle`进行多渠道打包，需要在安卓项目中配置[walle](https://github.com/Meituan-Dianping/walle)。
 
 ### 版本信息（这里只是列出开发已知可行版本，其他版本需要使用这自己探索）
 - java：`java version "17.0.2`，[下载地址>>](https://jdk.java.net/archive/)
